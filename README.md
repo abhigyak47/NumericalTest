@@ -1,6 +1,6 @@
 # Quant Finance Practice Game (Version 2.0)
 
-A comprehensive quantitative finance interview practice application with **LaTeX math rendering** and **centered question display**. This modular application helps you sharpen your mental math skills and pattern recognition abilities through timed tests with detailed review features.
+A comprehensive quantitative finance interview practice application with a **centered question display**. This modular application helps you sharpen your mental math skills and pattern recognition abilities through timed tests with detailed review features.
 
 ## 🎯 Features
 
@@ -17,14 +17,7 @@ A comprehensive quantitative finance interview practice application with **LaTeX
   - Alternating/interleaved sequences
   - Fibonacci-style sequences
 
-### ✨ **LaTeX Math Rendering** (NEW)
-- **Beautiful mathematical expressions** rendered using matplotlib
-- Professional fraction notation: $\frac{3}{4} + \frac{2}{3} = ?$
-- Mixed fractions: $1\frac{3}{4} \times 2\frac{1}{2} = ?$
-- Percentage calculations: $25\% \text{ of } 200 = ?$
-- Clean, readable mathematical formatting
-
-### 🎯 **Centered Question Display** (NEW)
+### 🎯 **Centered Question Display**
 - **Professional layout** with questions centered in the interface
 - Enhanced readability with proper spacing and alignment
 - Modern, clean visual design
@@ -72,27 +65,28 @@ Quant_OA/
 │   │   ├── numeric.py     # Numeric test mode
 │   │   └── sequence.py    # Sequence test mode
 │   └── utils/             # Utilities
-│       └── latex_renderer.py  # LaTeX rendering functionality
 └── quant_finance_practice.py  # Original single-file version (legacy)
+└── test_core.py               # Core functionality testing
 ```
 
 ## 🚀 Installation
 
 ### Prerequisites
-- Python 3.10 or higher
+- Python 3.14.0 (latest)
+- uv (Python package manager) - Install with `curl -LsSf https://astral.sh/uv/install.sh | sh`
 - Tkinter (included with most Python installations)
 
 ### Setup
 1. Clone or download the repository
-2. Create and activate a virtual environment:
+2. Create and activate a uv environment:
 ```bash
-python3.11 -m venv .venv
+uv venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
 3. Install dependencies:
 ```bash
-pip3.11 install -r requirements.txt
+uv pip install -r requirements.txt
 ```
 
 4. Make the launcher executable:
@@ -108,22 +102,22 @@ chmod +x run.sh
 ./run.sh
 
 # Or directly with Python
-python3.11 main.py
+python main.py
 
 # Run with a specific seed for reproducible sessions
-python3.11 main.py --seed 12345
+python main.py --seed 12345
 
 # Run self-test
-python3.11 main.py --selftest
+python main.py --selftest
 ```
 
 ### Command Line Options
 ```bash
 # Use a specific seed for reproducible sessions
-python3.11 main.py --seed 12345
+python main.py --seed 12345
 
 # Run self-test and exit
-python3.11 main.py --selftest
+python main.py --selftest
 ```
 
 ### Interface Navigation
@@ -144,58 +138,58 @@ python3.11 main.py --selftest
 ### Numeric Questions
 
 #### Integer Arithmetic
-Basic operations with integers displayed as LaTeX:
-- Addition: $23 + 45 = ?$
-- Subtraction: $87 - 34 = ?$
-- Multiplication: $12 \times 8 = ?$
-- Division: $144 \div 12 = ?$
+Basic operations with integers:
+- Addition: 23 + 45 = ?
+- Subtraction: 87 - 34 = ?
+- Multiplication: 12 × 8 = ?
+- Division: 144 ÷ 12 = ?
 
 #### Decimal Arithmetic
 Operations with decimal numbers (1-3 decimal places):
-- $12.34 + 45.67 = ?$
-- $89.50 - 23.75 = ?$
-- $3.14 \times 2.5 = ?$
+- 12.34 + 45.67 = ?
+- 89.50 - 23.75 = ?
+- 3.14 × 2.5 = ?
 
 #### Fraction Arithmetic
-Operations with proper and improper fractions (LaTeX formatted):
-- $\frac{3}{4} + \frac{2}{3} = ?$
-- $\frac{7}{8} - \frac{1}{4} = ?$
-- $\frac{2}{3} \times \frac{3}{4} = ?$
-- $\frac{3}{4} \div \frac{1}{2} = ?$
+Operations with proper and improper fractions:
+- 3/4 + 2/3 = ?
+- 7/8 - 1/4 = ?
+- 2/3 × 3/4 = ?
+- 3/4 ÷ 1/2 = ?
 
 #### Mixed Fractions
-Operations with mixed numbers (LaTeX formatted):
-- $1\frac{3}{4} + 2\frac{1}{2} = ?$
-- $3\frac{3}{4} - 1\frac{1}{4} = ?$
+Operations with mixed numbers:
+- 1 3/4 + 2 1/2 = ?
+- 3 3/4 - 1 1/4 = ?
 
 #### Percentages
-Common percentage calculations (LaTeX formatted):
-- $25\% \text{ of } 200 = ?$
-- $12.5\% \text{ of } 800 = ?$
-- $6.25\% \text{ of } 1600 = ?$
+Common percentage calculations:
+- 25% of 200 = ?
+- 12.5% of 800 = ?
+- 6.25% of 1600 = ?
 
 ### Sequence Questions
 
 #### Arithmetic Sequences
 Constant difference between terms:
-- $3, 7, 11, 15, 19, ?$ (Answer: 23, difference = 4)
+- 3, 7, 11, 15, 19, ? (Answer: 23, difference = 4)
 
 #### Geometric Sequences
 Constant ratio between terms:
-- $2, 6, 18, 54, 162, ?$ (Answer: 486, ratio = 3)
+- 2, 6, 18, 54, 162, ? (Answer: 486, ratio = 3)
 
 #### Polynomial Patterns
 Square or cube patterns:
-- $4, 9, 16, 25, 36, ?$ (Answer: 49, n² pattern starting from 2²)
-- $1, 8, 27, 64, 125, ?$ (Answer: 216, n³ pattern starting from 1³)
+- 4, 9, 16, 25, 36, ? (Answer: 49, n² pattern starting from 2²)
+- 1, 8, 27, 64, 125, ? (Answer: 216, n³ pattern starting from 1³)
 
 #### Alternating Sequences
 Two interleaved patterns:
-- $2, 8, 4, 10, 6, 12, ?$ (Answer: 8, odd positions +2, even positions +2)
+- 2, 8, 4, 10, 6, 12, ? (Answer: 8, odd positions +2, even positions +2)
 
 #### Fibonacci-style
 Each term is sum of two preceding terms:
-- $3, 5, 8, 13, 21, ?$ (Answer: 34)
+- 3, 5, 8, 13, 21, ? (Answer: 34)
 
 ## 📊 Scoring System
 
@@ -211,12 +205,12 @@ The application automatically categorizes common mistakes:
 
 | Error Type | Description | Example |
 |------------|-------------|---------|
-| off-by-one | Answer is one unit away from correct | $23$ instead of $24$ |
-| decimal-place | Decimal point is misplaced | $12.3$ instead of $1.23$ |
-| fraction-reduction | Errors in fraction operations | $\frac{5}{8}$ instead of $\frac{3}{4}$ |
-| wrong-ratio | Incorrect ratio in geometric sequences | $486$ instead of $162$ |
+| off-by-one | Answer is one unit away from correct | 23 instead of 24 |
+| decimal-place | Decimal point is misplaced | 12.3 instead of 1.23 |
+| fraction-reduction | Errors in fraction operations | 5/8 instead of 3/4 |
+| wrong-ratio | Incorrect ratio in geometric sequences | 486 instead of 162 |
 | interleave-swap | Confusing patterns in alternating sequences | Applying wrong rule |
-| fib-near | Near-correct Fibonacci calculations | $33$ instead of $34$ |
+| fib-near | Near-correct Fibonacci calculations | 33 instead of 34 |
 
 ## 📈 CSV Export Format
 
@@ -228,7 +222,7 @@ question,A,B,C,D,E,correct,chosen,correctness,time_spent,error_tag
 ```
 
 Fields:
-- `question`: The question prompt (LaTeX formatted)
+- `question`: The question prompt
 - `A,B,C,D,E`: All answer options
 - `correct`: Correct answer letter
 - `chosen`: Your selected answer
@@ -248,8 +242,8 @@ Fields:
 
 ### Micro-techniques
 - **Decimals**: Multiply as integers, then place decimal point based on total places
-- **Fractions**: Remember $\frac{a}{b} \div \frac{c}{d} = \frac{a}{b} \times \frac{d}{c}$ and reduce early using GCD
-- **Percentages**: Memorize common fraction equivalents (12.5% = $\frac{1}{8}$, 6.25% = $\frac{1}{16}$)
+- **Fractions**: Remember a/b ÷ c/d = a/b × d/c and reduce early using GCD
+- **Percentages**: Memorize common fraction equivalents (12.5% = 1/8, 6.25% = 1/16)
 - **Sequences**: State the pattern before answering; if uncertain, skip and return
 
 ## 🔧 Advanced Features
@@ -257,7 +251,7 @@ Fields:
 ### Deterministic Sessions
 Use seeds to create reproducible test sessions:
 ```bash
-python3.11 main.py --seed 12345
+python main.py --seed 12345
 ```
 This ensures the same questions, order, and options every time - perfect for comparing performance or creating practice tests.
 
@@ -291,14 +285,12 @@ After completing a test, use "Re-drill my mistakes" to:
 #### Question Generators (`src/generators/`)
 - `NumericQuestionFactory`: Generates arithmetic problems
 - `SequenceQuestionFactory`: Generates pattern recognition problems
-- LaTeX integration for mathematical expressions
 
 #### GUI Components (`src/gui/`)
 - `MainMenu`: Main menu with options and settings
-- `TestScreen`: Test interface with centered LaTeX questions
+- `TestScreen`: Test interface with centered questions
 - `ResultsScreen`: Results display and export options
 - `ReviewScreen`: Detailed answer review with explanations
-- `MathLabel`: Custom widget for LaTeX rendering
 
 #### Test Modes (`src/modes/`)
 - `BaseMode`: Abstract base class for test modes
@@ -306,17 +298,11 @@ After completing a test, use "Re-drill my mistakes" to:
 - `SequenceTestMode`: Sequence test configuration
 
 #### Utilities (`src/utils/`)
-- `LaTeXRenderer`: Handles mathematical expression rendering
-- Integration with matplotlib for high-quality output
+- Currently no external utilities required - all functionality built-in
 
 ## 🐛 Troubleshooting
 
 ### Common Issues
-
-#### LaTeX Rendering Issues
-- **Ensure dependencies are installed**: `pip3.11 install -r requirements.txt`
-- **Check matplotlib availability**: Make sure matplotlib and Pillow are properly installed
-- **Font issues**: On some systems, ensure fonts are available for LaTeX rendering
 
 #### Tkinter Not Found
 If you get an error about Tkinter not being found:
@@ -330,15 +316,14 @@ If you get an error about Tkinter not being found:
 - Ensure virtual environment is activated
 
 #### Performance Issues
-- LaTeX rendering may be slower initially but images are cached
 - The application is optimized for standard test sizes
 - Timer precision is 1-second intervals, suitable for test timing
 
 ### Getting Help
 - Check the console for error messages
-- Ensure Python 3.10+ is being used
-- Run the self-test: `python3.11 main.py --selftest`
-- Verify all dependencies are installed: `pip3.11 install -r requirements.txt`
+- Ensure Python 3.14.0 is being used
+- Run the self-test: `python main.py --selftest`
+- Verify uv environment is activated and dependencies installed
 
 ## 🤝 Contributing
 
@@ -362,18 +347,17 @@ The application is designed to be easily extensible:
 3. Follow the existing class hierarchy
 4. Preserve deterministic behavior with seeds
 5. Test with the `--selftest` flag
-6. Ensure LaTeX rendering works for new question types
 
 ## 📝 Changelog
 
 ### Version 2.0 (Current)
-- ✨ **Added LaTeX math rendering** for all questions
 - ✨ **Centered question display** for better readability
 - 🏗️ **Complete code refactoring** into modular architecture
 - 🔧 **Improved error categorization** and analysis
-- 📱 **Enhanced GUI** with MathLabel widget
+- 📱 **Enhanced GUI** with improved layout
 - 🧹 **Clean separation of concerns** across modules
 - 📚 **Updated documentation** and project structure
+- 🐍 **Updated to Python 3.14.0** with uv environment support
 
 ### Version 1.0 (Legacy)
 - Basic numeric and sequence questions
@@ -393,4 +377,4 @@ This project is maintained for educational and interview preparation purposes.
 
 ## 🙏 Acknowledgments
 
-Designed following quantitative finance interview preparation best practices. The question generation algorithms create realistic distractors based on common mathematical mistakes observed in interview settings. LaTeX rendering provides professional mathematical notation for enhanced learning experience.
+Designed following quantitative finance interview preparation best practices. The question generation algorithms create realistic distractors based on common mathematical mistakes observed in interview settings.
