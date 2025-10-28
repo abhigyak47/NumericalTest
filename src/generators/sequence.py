@@ -27,6 +27,17 @@ class SequenceQuestionFactory(QuestionGenerator):
         generator = random.choice(self.pattern_types)
         return generator()
 
+    # ---------------------------
+    # Helper: consistent prompt formatting
+    # ---------------------------
+    def _format_prompt(self, terms: List[int]) -> str:
+        """Format the sequence question prompt consistently"""
+        return f"What is the next number in this sequence?\n{', '.join(map(str, terms[:5]))}, ?"
+
+    # ---------------------------
+    # Sequence generators
+    # ---------------------------
+
     def _arithmetic_sequence(self) -> Question:
         """Generate arithmetic sequence questions"""
         step = random.randint(-9, 9)
@@ -40,8 +51,7 @@ class SequenceQuestionFactory(QuestionGenerator):
         if any(abs(t) > 100 for t in terms):
             return self._arithmetic_sequence()  # Regenerate
 
-        prompt = f"What is the next number in this sequence?\\\\{', '.join(map(str, terms[:5]))}, ?"
-
+        prompt = self._format_prompt(terms)
         correct_answer = str(terms[5])
         return self._create_sequence_question(prompt, correct_answer, "arithmetic", terms)
 
@@ -55,8 +65,7 @@ class SequenceQuestionFactory(QuestionGenerator):
         if terms[-1] > 1000:
             return self._geometric_sequence()  # Regenerate
 
-        prompt = f"What is the next number in this sequence?\\\\{', '.join(map(str, terms[:5]))}, ?"
-
+        prompt = self._format_prompt(terms)
         correct_answer = str(terms[5])
         return self._create_sequence_question(prompt, correct_answer, "geometric", terms)
 
@@ -71,8 +80,7 @@ class SequenceQuestionFactory(QuestionGenerator):
             start_n = random.randint(1, 3)
             terms = [(start_n + i) ** 3 for i in range(6)]
 
-        prompt = f"What is the next number in this sequence?\\\\{', '.join(map(str, terms[:5]))}, ?"
-
+        prompt = self._format_prompt(terms)
         correct_answer = str(terms[5])
         pattern_name = "n² pattern" if poly_type == "square" else "n³ pattern"
         return self._create_sequence_question(prompt, correct_answer, pattern_name, terms)
@@ -92,8 +100,7 @@ class SequenceQuestionFactory(QuestionGenerator):
             else:
                 terms.append(start2 + (i // 2) * step2)
 
-        prompt = f"What is the next number in this sequence?\\\\{', '.join(map(str, terms[:5]))}, ?"
-
+        prompt = self._format_prompt(terms)
         correct_answer = str(terms[5])
         return self._create_sequence_question(prompt, correct_answer, "alternating", terms)
 
@@ -106,61 +113,61 @@ class SequenceQuestionFactory(QuestionGenerator):
         for i in range(4):
             terms.append(terms[-1] + terms[-2])
 
-        prompt = f"What is the next number in this sequence?\\\\{', '.join(map(str, terms))}, ?"
-
+        prompt = self._format_prompt(terms)
         correct_answer = str(terms[-1] + terms[-2])
         return self._create_sequence_question(prompt, correct_answer, "fibonacci", terms)
+
+    # ---------------------------
+    # Question creation and explanation
+    # ---------------------------
 
     def _create_sequence_question(self, prompt: str, correct_answer: str, pattern_type: str, terms: List[int]) -> Question:
         """Create a sequence question with distractors"""
         options = [correct_answer]
-
-        # Generate distractors
         last_term = terms[-1]
 
         if pattern_type == "arithmetic":
             step = terms[1] - terms[0]
             options.extend([
-                str(last_term + step * 2),  # Skip one step
-                str(last_term - step),      # Previous term
-                str(last_term + step + 1),  # Off by one
-                str(last_term + step * 3)   # Multiple steps
+                str(last_term + step * 2),
+                str(last_term - step),
+                str(last_term + step + 1),
+                str(last_term + step * 3)
             ])
 
         elif pattern_type == "geometric":
             ratio = terms[1] // terms[0] if terms[0] != 0 else 2
             options.extend([
-                str(last_term * ratio * ratio),  # Skip one step
-                str(terms[-2]),                  # Previous term
-                str(last_term * ratio + 1),      # Off by one
-                str(last_term * ratio - 1)       # Off by one
+                str(last_term * ratio * ratio),
+                str(terms[-2]),
+                str(last_term * ratio + 1),
+                str(last_term * ratio - 1)
             ])
 
         elif pattern_type in ["n² pattern", "n³ pattern"]:
             options.extend([
-                str(terms[-2]),                  # Previous term
-                str(last_term + 1),              # Off by one
-                str(last_term - 1),              # Off by one
-                str(last_term + 10)              # Random error
+                str(terms[-2]),
+                str(last_term + 1),
+                str(last_term - 1),
+                str(last_term + 10)
             ])
 
         elif pattern_type == "alternating":
-            # Wrong pattern application
             odd_step = terms[2] - terms[0]
             even_step = terms[3] - terms[1]
             options.extend([
-                str(last_term + odd_step),       # Apply wrong step
-                str(terms[-2]),                  # Previous term
-                str(last_term + even_step + 1),  # Wrong step + error
-                str(last_term + 5)               # Random error
+                str(last_term + odd_step),
+                str(terms[-2]),
+                str(last_term + even_step + 1),
+                str(last_term + 5)
             ])
 
         elif pattern_type == "fibonacci":
             options.extend([
-                str(terms[-2]),                  # Previous term
-                str(terms[-1] + terms[-3]),      # Wrong sum
-                str(terms[-1] + terms[-2] + 1),  # Off by one
-                str(terms[-1] * 2)               # Double instead of sum
+                str(terms[-2]),
+                str(terms[-1] + terms[-3]),
+                str(terms[-1] + terms[-2] + 1),
+                str(terms[-1] * 2)
             ])
 
         # Ensure we have 5 unique options
@@ -170,9 +177,7 @@ class SequenceQuestionFactory(QuestionGenerator):
 
         options = options[:5]
         random.shuffle(options)
-
         answer_letter = chr(ord('A') + options.index(correct_answer))
-
         explanation = self._generate_sequence_explanation(pattern_type, terms)
 
         return Question(
@@ -180,7 +185,7 @@ class SequenceQuestionFactory(QuestionGenerator):
             options=options,
             answer_letter=answer_letter,
             explanation=explanation,
-            meta={"type": "sequence", "pattern": pattern_type, "terms": terms, "latex": True}
+            meta={"type": "sequence", "pattern": pattern_type, "terms": terms, "latex": False}
         )
 
     def _generate_sequence_explanation(self, pattern_type: str, terms: List[int]) -> str:
