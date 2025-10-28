@@ -723,7 +723,7 @@ class App(tk.Tk):
         self.minsize(900, 600)
 
         self.seed = seed
-        self.selftest = selftesttest
+        self.selftest = selftest
         self.current_mode: Optional[BaseMode] = None
         self.frames = {}
 

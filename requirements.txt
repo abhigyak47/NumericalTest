@@ -1,0 +1,33 @@
+# Quant Finance Practice Game Requirements (Version 2.0)
+# Core dependencies for the application with LaTeX rendering
+
+# GUI Framework (tkinter comes with Python, but ensuring proper version)
+# Note: No external tkinter package needed - uses Python standard library
+
+# Required dependencies for LaTeX math rendering:
+matplotlib>=3.5.0
+Pillow>=8.0.0
+numpy>=1.21.0
+
+# Standard library modules used (no installation needed):
+# - tkinter (GUI framework)
+# - random (question generation)
+# - fractions (fraction arithmetic)
+# - dataclasses (Question structure)
+# - csv (data export)
+# - argparse (command-line parsing)
+# - typing (type hints)
+# - datetime (timestamp functionality)
+# - sys (system operations)
+# - os (file operations)
+
+# For enhanced functionality and compatibility:
+# pandas>=1.3.0      # For enhanced data analysis and export features (optional)
+
+# Development and testing dependencies:
+# pytest>=6.0.0     # For comprehensive testing (optional)
+# pytest-cov>=2.12.0 # For coverage reporting (optional)
+
+# Optional: For better tkinter experience on macOS
+# This may help with the macOS version compatibility issue
+# python-tk>=3.9.0   # Usually system-installed, listed for reference

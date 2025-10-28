@@ -1,8 +1,8 @@
-# Quant Finance Practice Game
+# Quant Finance Practice Game (Version 2.0)
 
-A comprehensive quantitative finance interview practice application built with Python and Tkinter. This single-file, object-oriented application helps you sharpen your mental math skills and pattern recognition abilities through timed tests with detailed review features.
+A comprehensive quantitative finance interview practice application with **LaTeX math rendering** and **centered question display**. This modular application helps you sharpen your mental math skills and pattern recognition abilities through timed tests with detailed review features.
 
-## Features
+## 🎯 Features
 
 ### 🧮 **Two Test Modes**
 - **Numeric Test**: 50 questions in 6 minutes covering:
@@ -16,6 +16,19 @@ A comprehensive quantitative finance interview practice application built with P
   - Polynomial patterns (n², n³)
   - Alternating/interleaved sequences
   - Fibonacci-style sequences
+
+### ✨ **LaTeX Math Rendering** (NEW)
+- **Beautiful mathematical expressions** rendered using matplotlib
+- Professional fraction notation: $\frac{3}{4} + \frac{2}{3} = ?$
+- Mixed fractions: $1\frac{3}{4} \times 2\frac{1}{2} = ?$
+- Percentage calculations: $25\% \text{ of } 200 = ?$
+- Clean, readable mathematical formatting
+
+### 🎯 **Centered Question Display** (NEW)
+- **Professional layout** with questions centered in the interface
+- Enhanced readability with proper spacing and alignment
+- Modern, clean visual design
+- Improved focus on the mathematical content
 
 ### ⏱️ **Timer Options**
 - **Timed Mode**: Automatic submission when time expires
@@ -35,7 +48,35 @@ A comprehensive quantitative finance interview practice application built with P
 - "Re-drill my mistakes" mode for focused practice
 - Keyboard shortcuts for efficient navigation
 
-## Installation
+## 📁 Project Structure
+
+```
+Quant_OA/
+├── main.py                 # Main entry point
+├── run.sh                  # Launcher script
+├── requirements.txt        # Dependencies
+├── README.md              # This file
+├── src/
+│   ├── app.py             # Main application class
+│   ├── models/            # Data models
+│   │   ├── question.py    # Question and TestResult classes
+│   │   └── timer.py       # Timer functionality
+│   ├── generators/        # Question generators
+│   │   ├── base.py        # Base generator class
+│   │   ├── numeric.py     # Numeric question generator
+│   │   └── sequence.py    # Sequence question generator
+│   ├── gui/               # GUI components
+│   │   └── components.py  # All GUI frames and widgets
+│   ├── modes/             # Test modes
+│   │   ├── base.py        # Base mode class
+│   │   ├── numeric.py     # Numeric test mode
+│   │   └── sequence.py    # Sequence test mode
+│   └── utils/             # Utilities
+│       └── latex_renderer.py  # LaTeX rendering functionality
+└── quant_finance_practice.py  # Original single-file version (legacy)
+```
+
+## 🚀 Installation
 
 ### Prerequisites
 - Python 3.10 or higher
@@ -45,26 +86,44 @@ A comprehensive quantitative finance interview practice application built with P
 1. Clone or download the repository
 2. Create and activate a virtual environment:
 ```bash
-python -m venv .venv
+python3.11 -m venv .venv
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
-3. The application uses only Python standard library modules, so no additional packages need to be installed!
+3. Install dependencies:
+```bash
+pip3.11 install -r requirements.txt
+```
 
-## Usage
+4. Make the launcher executable:
+```bash
+chmod +x run.sh
+```
+
+## 🎮 Usage
 
 ### Basic Usage
 ```bash
-python quant_finance_practice.py
+# Run with the launcher script
+./run.sh
+
+# Or directly with Python
+python3.11 main.py
+
+# Run with a specific seed for reproducible sessions
+python3.11 main.py --seed 12345
+
+# Run self-test
+python3.11 main.py --selftest
 ```
 
 ### Command Line Options
 ```bash
 # Use a specific seed for reproducible sessions
-python quant_finance_practice.py --seed 12345
+python3.11 main.py --seed 12345
 
 # Run self-test and exit
-python quant_finance_practice.py --selftest
+python3.11 main.py --selftest
 ```
 
 ### Interface Navigation
@@ -80,65 +139,65 @@ python quant_finance_practice.py --selftest
 3. **Results Screen**: View your overall performance
 4. **Review Screen**: Analyze each question with explanations
 
-## Question Types
+## 📖 Question Types
 
 ### Numeric Questions
 
 #### Integer Arithmetic
-Basic operations with integers:
-- Addition: `23 + 45 = ?`
-- Subtraction: `87 - 34 = ?`
-- Multiplication: `12 × 8 = ?`
-- Division: `144 ÷ 12 = ?`
+Basic operations with integers displayed as LaTeX:
+- Addition: $23 + 45 = ?$
+- Subtraction: $87 - 34 = ?$
+- Multiplication: $12 \times 8 = ?$
+- Division: $144 \div 12 = ?$
 
 #### Decimal Arithmetic
 Operations with decimal numbers (1-3 decimal places):
-- `12.34 + 45.67 = ?`
-- `89.50 - 23.75 = ?`
-- `3.14 × 2.5 = ?`
+- $12.34 + 45.67 = ?$
+- $89.50 - 23.75 = ?$
+- $3.14 \times 2.5 = ?$
 
 #### Fraction Arithmetic
-Operations with proper and improper fractions:
-- `3/4 + 2/3 = ?`
-- `7/8 - 1/4 = ?`
-- `2/3 × 3/4 = ?`
-- `3/4 ÷ 1/2 = ?`
+Operations with proper and improper fractions (LaTeX formatted):
+- $\frac{3}{4} + \frac{2}{3} = ?$
+- $\frac{7}{8} - \frac{1}{4} = ?$
+- $\frac{2}{3} \times \frac{3}{4} = ?$
+- $\frac{3}{4} \div \frac{1}{2} = ?$
 
 #### Mixed Fractions
-Operations with mixed numbers:
-- `2 1/4 + 1 1/2 = ?`
-- `3 3/4 - 1 1/4 = ?`
+Operations with mixed numbers (LaTeX formatted):
+- $1\frac{3}{4} + 2\frac{1}{2} = ?$
+- $3\frac{3}{4} - 1\frac{1}{4} = ?$
 
 #### Percentages
-Common percentage calculations:
-- `25% of 200 = ?`
-- `12.5% of 800 = ?`
-- `6.25% of 1600 = ?`
+Common percentage calculations (LaTeX formatted):
+- $25\% \text{ of } 200 = ?$
+- $12.5\% \text{ of } 800 = ?$
+- $6.25\% \text{ of } 1600 = ?$
 
 ### Sequence Questions
 
 #### Arithmetic Sequences
 Constant difference between terms:
-- `3, 7, 11, 15, 19, ?` (Answer: 23, difference = 4)
+- $3, 7, 11, 15, 19, ?$ (Answer: 23, difference = 4)
 
 #### Geometric Sequences
 Constant ratio between terms:
-- `2, 6, 18, 54, 162, ?` (Answer: 486, ratio = 3)
+- $2, 6, 18, 54, 162, ?$ (Answer: 486, ratio = 3)
 
 #### Polynomial Patterns
 Square or cube patterns:
-- `4, 9, 16, 25, 36, ?` (Answer: 49, n² pattern starting from 2²)
-- `1, 8, 27, 64, 125, ?` (Answer: 216, n³ pattern starting from 1³)
+- $4, 9, 16, 25, 36, ?$ (Answer: 49, n² pattern starting from 2²)
+- $1, 8, 27, 64, 125, ?$ (Answer: 216, n³ pattern starting from 1³)
 
 #### Alternating Sequences
 Two interleaved patterns:
-- `2, 8, 4, 10, 6, 12, ?` (Answer: 8, odd positions +2, even positions +2)
+- $2, 8, 4, 10, 6, 12, ?$ (Answer: 8, odd positions +2, even positions +2)
 
 #### Fibonacci-style
 Each term is sum of two preceding terms:
-- `3, 5, 8, 13, 21, ?` (Answer: 34)
+- $3, 5, 8, 13, 21, ?$ (Answer: 34)
 
-## Scoring System
+## 📊 Scoring System
 
 - **Correct Answer**: +1 point
 - **Incorrect Answer**: -1 point
@@ -146,30 +205,30 @@ Each term is sum of two preceding terms:
 
 Score is only shown at the end to prevent test-taking anxiety.
 
-## Error Classification
+## 🏷️ Error Classification
 
 The application automatically categorizes common mistakes:
 
 | Error Type | Description | Example |
 |------------|-------------|---------|
-| off-by-one | Answer is one unit away from correct | `23` instead of `24` |
-| decimal-place | Decimal point is misplaced | `12.3` instead of `1.23` |
-| fraction-reduction | Errors in fraction operations | `5/8` instead of `3/4` |
-| wrong-ratio | Incorrect ratio in geometric sequences | `486` instead of `162` |
+| off-by-one | Answer is one unit away from correct | $23$ instead of $24$ |
+| decimal-place | Decimal point is misplaced | $12.3$ instead of $1.23$ |
+| fraction-reduction | Errors in fraction operations | $\frac{5}{8}$ instead of $\frac{3}{4}$ |
+| wrong-ratio | Incorrect ratio in geometric sequences | $486$ instead of $162$ |
 | interleave-swap | Confusing patterns in alternating sequences | Applying wrong rule |
-| fib-near | Near-correct Fibonacci calculations | `33` instead of `34` |
+| fib-near | Near-correct Fibonacci calculations | $33$ instead of $34$ |
 
-## CSV Export Format
+## 📈 CSV Export Format
 
 Export your results for detailed analysis:
 
 ```csv
 question,A,B,C,D,E,correct,chosen,correctness,time_spent,error_tag
-"23 + 45 = ?","68","69","70","71","72","A","A","Correct","",""
+"12.34 + 45.67 = ?","58.01","58.02","58.03","58.04","58.05","A","A","Correct","",""
 ```
 
 Fields:
-- `question`: The question prompt
+- `question`: The question prompt (LaTeX formatted)
 - `A,B,C,D,E`: All answer options
 - `correct`: Correct answer letter
 - `chosen`: Your selected answer
@@ -177,7 +236,7 @@ Fields:
 - `time_spent`: Time per question (future feature)
 - `error_tag`: Automatic error classification
 
-## Study Plan Recommendations
+## 📚 Study Plan Recommendations
 
 ### Daily Practice
 - Complete one short run of each mode (numeric and sequence)
@@ -189,16 +248,16 @@ Fields:
 
 ### Micro-techniques
 - **Decimals**: Multiply as integers, then place decimal point based on total places
-- **Fractions**: Remember `a/b ÷ c/d = a/b × d/c` and reduce early using GCD
-- **Percentages**: Memorize common fraction equivalents (12.5% = 1/8, 6.25% = 1/16)
+- **Fractions**: Remember $\frac{a}{b} \div \frac{c}{d} = \frac{a}{b} \times \frac{d}{c}$ and reduce early using GCD
+- **Percentages**: Memorize common fraction equivalents (12.5% = $\frac{1}{8}$, 6.25% = $\frac{1}{16}$)
 - **Sequences**: State the pattern before answering; if uncertain, skip and return
 
-## Advanced Features
+## 🔧 Advanced Features
 
 ### Deterministic Sessions
 Use seeds to create reproducible test sessions:
 ```bash
-python quant_finance_practice.py --seed 12345
+python3.11 main.py --seed 12345
 ```
 This ensures the same questions, order, and options every time - perfect for comparing performance or creating practice tests.
 
@@ -214,35 +273,50 @@ After completing a test, use "Re-drill my mistakes" to:
 - Focus on your weak areas
 - Build confidence with targeted practice
 
-## Technical Architecture
-
-### Class Structure
-- **App**: Main application controller
-- **BaseMode**: Abstract base class for test modes
-- **NumericTestMode**: Numeric questions implementation
-- **SequenceTestMode**: Sequence questions implementation
-- **Timer**: Flexible countdown/elapsed timer
-- **Question**: Dataclass for question structure
-- **QuestionGenerator**: Abstract base for question factories
-- **NumericQuestionFactory**: Generates numeric questions
-- **SequenceQuestionFactory**: Generates sequence questions
-
-### UI Components
-- **MainMenu**: Test selection and options
-- **TestScreen**: Question display and answering
-- **ResultsScreen**: Performance summary
-- **ReviewScreen**: Detailed question analysis
+## 🏗️ Technical Architecture
 
 ### Design Principles
-- **Single File**: Entire application in one Python file
-- **Object-Oriented**: Clean separation of concerns
-- **Standard Library Only**: No external dependencies
-- **Deterministic**: Seed-based reproducibility
-- **Accessible**: Clear fonts, consistent sizing, keyboard navigation
+- **Separation of Concerns**: Clear separation between data, logic, and presentation
+- **Modularity**: Each component has a single responsibility
+- **Extensibility**: Easy to add new question types and modes
+- **Maintainability**: Clean, readable code with proper documentation
 
-## Troubleshooting
+### Key Components
+
+#### Data Models (`src/models/`)
+- `Question`: Represents a single question with metadata
+- `TestResult`: Stores test results and statistics
+- `Timer`: Handles countdown and elapsed time functionality
+
+#### Question Generators (`src/generators/`)
+- `NumericQuestionFactory`: Generates arithmetic problems
+- `SequenceQuestionFactory`: Generates pattern recognition problems
+- LaTeX integration for mathematical expressions
+
+#### GUI Components (`src/gui/`)
+- `MainMenu`: Main menu with options and settings
+- `TestScreen`: Test interface with centered LaTeX questions
+- `ResultsScreen`: Results display and export options
+- `ReviewScreen`: Detailed answer review with explanations
+- `MathLabel`: Custom widget for LaTeX rendering
+
+#### Test Modes (`src/modes/`)
+- `BaseMode`: Abstract base class for test modes
+- `NumericTestMode`: Numeric test configuration
+- `SequenceTestMode`: Sequence test configuration
+
+#### Utilities (`src/utils/`)
+- `LaTeXRenderer`: Handles mathematical expression rendering
+- Integration with matplotlib for high-quality output
+
+## 🐛 Troubleshooting
 
 ### Common Issues
+
+#### LaTeX Rendering Issues
+- **Ensure dependencies are installed**: `pip3.11 install -r requirements.txt`
+- **Check matplotlib availability**: Make sure matplotlib and Pillow are properly installed
+- **Font issues**: On some systems, ensure fonts are available for LaTeX rendering
 
 #### Tkinter Not Found
 If you get an error about Tkinter not being found:
@@ -256,29 +330,67 @@ If you get an error about Tkinter not being found:
 - Ensure virtual environment is activated
 
 #### Performance Issues
+- LaTeX rendering may be slower initially but images are cached
 - The application is optimized for standard test sizes
-- Larger question counts may show slight delays during generation
 - Timer precision is 1-second intervals, suitable for test timing
 
 ### Getting Help
 - Check the console for error messages
 - Ensure Python 3.10+ is being used
-- Verify all files are in the same directory
+- Run the self-test: `python3.11 main.py --selftest`
+- Verify all dependencies are installed: `pip3.11 install -r requirements.txt`
 
-## Contributing
+## 🤝 Contributing
 
-This project follows the POML (Prompt Object Markup Language) specification. When making changes:
+The application is designed to be easily extensible:
 
-1. Maintain the single-file structure
-2. Use only Python standard library modules
+### Adding New Question Types
+1. Create a new generator class in `src/generators/`
+2. Inherit from `QuestionGenerator`
+3. Implement the `generate_question()` method
+4. Add to appropriate test mode
+
+### Adding New Test Modes
+1. Create a new mode class in `src/modes/`
+2. Inherit from `BaseMode`
+3. Implement required abstract methods
+4. Add to main application menu
+
+### Development Guidelines
+1. Maintain the modular architecture
+2. Use proper type hints and documentation
 3. Follow the existing class hierarchy
 4. Preserve deterministic behavior with seeds
 5. Test with the `--selftest` flag
+6. Ensure LaTeX rendering works for new question types
 
-## License
+## 📝 Changelog
 
-This project is provided as-is for educational and practice purposes.
+### Version 2.0 (Current)
+- ✨ **Added LaTeX math rendering** for all questions
+- ✨ **Centered question display** for better readability
+- 🏗️ **Complete code refactoring** into modular architecture
+- 🔧 **Improved error categorization** and analysis
+- 📱 **Enhanced GUI** with MathLabel widget
+- 🧹 **Clean separation of concerns** across modules
+- 📚 **Updated documentation** and project structure
 
-## Acknowledgments
+### Version 1.0 (Legacy)
+- Basic numeric and sequence questions
+- Simple tkinter interface
+- CSV export functionality
+- Timer and review system
 
-Designed following quantitative finance interview preparation best practices. The question generation algorithms create realistic distractors based on common mathematical mistakes observed in interview settings.
+## 📄 License
+
+This project is maintained for educational and interview preparation purposes.
+
+---
+
+**Author**: Abhigya Koirala
+**Version**: 2.0
+**Last Updated**: 2025
+
+## 🙏 Acknowledgments
+
+Designed following quantitative finance interview preparation best practices. The question generation algorithms create realistic distractors based on common mathematical mistakes observed in interview settings. LaTeX rendering provides professional mathematical notation for enhanced learning experience.
