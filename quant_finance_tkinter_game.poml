@@ -1,0 +1,197 @@
+
+# POML: Prompt Object Markup Language
+# File: quant_finance_tkinter_game.poml
+# Purpose: Specification for a single-file, OOP Tkinter quantitative finance interview practice game.
+
+prompt.version = "1.0"
+prompt.title = "Quant Finance Numeracy & Sequences — Tkinter OOP Single-File App"
+prompt.owner = "Abhigya Koirala"
+prompt.language = "Python 3.10+"
+prompt.seed_support = true
+prompt.single_file = true
+prompt.object_oriented = true
+
+[meta]
+created = "2025-10-28"
+tags = ["tkinter", "numeracy", "sequences", "quant-interview", "practice-game", "oop", "timer", "csv-export"]
+goals = [
+  "Fast numeracy under time pressure",
+  "Pattern recognition on sequences",
+  "Review with explanations to accelerate learning",
+  "Deterministic sessions via optional seed"
+]
+
+[app.structure]
+classes = [
+  "App",
+  "BaseMode",
+  "NumericTestMode",
+  "SequenceTestMode",
+  "Timer",
+  "Question",
+  "QuestionGenerator",
+  "NumericQuestionFactory",
+  "SequenceQuestionFactory"
+]
+determinism.flags = ["--seed <int>", "--selftest"]
+dependencies = ["tkinter", "random", "fractions", "dataclasses", "time", "math", "csv"]
+standard_library_only = true
+
+[ui.flow]
+screens = ["MainMenu", "TestScreen", "ResultsScreen", "ReviewScreen"]
+navigation = "Frames swapped inside App via show_frame(name)"
+keyboard_shortcuts = { prev = "Left", next = "Right/Return", finish = "Ctrl/Cmd+F" }
+
+[ui.main_menu]
+title = "Quant Finance Practice"
+buttons = ["Numeric Test", "Sequence Test"]
+inputs.optional = [
+  { name = "Seed", type = "int", default = "" },
+  { name = "Practice Mode", type = "bool", default = false, description = "No auto-submit; timer shows elapsed" },
+  { name = "Shuffle Options", type = "bool", default = true }
+]
+
+[ui.test_screen]
+topbar = { show_timer = true, position = "top-center", show_mode = true, show_progress = true }
+question_layout.order = ["index_label", "prompt_label", "option_labels_A_to_E", "dropdown"]
+dropdown.choices = ["Select Answer", "A", "B", "C", "D", "E"]
+dropdown.default = "Select Answer"
+state.persistence = "Selection saved per question; restored on revisit"
+buttons = ["Previous", "Next", "Finish Test"]
+finish.confirm_if_unanswered = true
+timer.auto_submit = true
+practice_mode.timer = "elapsed (no auto-submit)"
+
+[ui.results_screen]
+shows = ["Total Score", "Correct", "Incorrect", "Unanswered"]
+buttons = ["Review Answers", "Main Menu", "Retry (same mode)"]
+show_seed_if_used = true
+
+[ui.review_screen]
+shows = [
+  "Question text",
+  "Correct option (letter + value)",
+  "Your selection or 'Unanswered'",
+  "Explanation (1–3 lines)",
+  "Error tag"
+]
+export.csv = { enabled = true, columns = ["question","A","B","C","D","E","correct","chosen","correctness","time_spent","error_tag"] }
+redrill.shortcut = "Re-drill my mistakes (10)"
+
+[scoring]
+rule = { correct = +1, incorrect = -1, unanswered = 0 }
+show_score_only_at_end = true
+
+[timing]
+numeric_test_seconds = 360
+sequence_test_seconds = 300
+tick_ms = 1000
+
+[data.question_dataclass]
+fields = [
+  "prompt:str",
+  "options:list[str](len=5)",
+  "answer_letter:{A|B|C|D|E}",
+  "explanation:str",
+  "meta:dict"
+]
+validation = [
+  "5 unique options",
+  "correct option present exactly once",
+  "consistent numeric formatting (no spurious trailing zeros; avoid scientific notation)"
+]
+
+[mode.numeric]
+questions = 50
+timer_seconds = 360
+types = [
+  "integer_arithmetic(+,-,*,/)",
+  "decimal_arithmetic",
+  "fractions(+,-,*,/)",
+  "mixed_fractions",
+  "percentages"
+]
+generation.notes = "Keep integer division integral or craft distractors carefully if not integral. Decimals: 1-3 decimal places; ensure plausible magnitude. Fractions: reduce with exact Fraction arithmetic. Mixed: convert to improper, operate, reduce, present. Percent: (x/100)*N; include common simple percents (12.5%=1/8, 6.25%=1/16)."
+distractors = [
+  "off-by-one near integer",
+  "decimal-place error (x10 or /10)",
+  "fraction mis-operation (add numerators only, wrong reciprocal in division)",
+  "rounding/truncation variants"
+]
+explanations.style = "1-3 concise lines showing method"
+
+[mode.sequence]
+questions = 40
+timer_seconds = 300
+patterns = [
+  "arithmetic(+d)",
+  "geometric(xr)",
+  "polynomial (n^2 / n^3)",
+  "alternating/interleaved (two rules)",
+  "fibonacci-style (a[n]=a[n-1]+a[n-2])"
+]
+generation.rules = "Show 5-6 visible terms, ask for the next. Choose parameters to avoid ambiguity; small integers. Arithmetic step in [-9..9] excluding 0. Geometric ratios in [2..5]. Keep growth bounded for option readability."
+distractors = [
+  "previous term (n-1)",
+  "apply wrong step/ratio once",
+  "skip-one step",
+  "confuse interleaved strands",
+  "fibonacci +/- 1"
+]
+explanations.style = "Name the pattern + one-step derivation of next term"
+
+[determinism]
+seed.supported = true
+seed.affects = ["question generation", "option shuffle", "order"]
+selftest.enabled = true
+selftest.assertions = [
+  "scoring math",
+  "timer auto-finish",
+  "navigation preserves selections",
+  "csv schema"
+]
+
+[ux.accessibility]
+fonts = "clear, consistent sizing"
+min_window_width = 900
+focus_order = ["dropdown", "next"]
+no_audio = true
+visual_timer_only = true
+
+[implementation.notes]
+state_model = "questions: list[Question]; answers: list[None|A..E]; confidence(optional); per-question seconds(optional)"
+timer.impl = "after(1000, tick) with remaining_seconds guard"
+formatting.helpers = ["fmt_fraction", "fmt_decimal"]
+alternating_seq.impl = "generate strands separately; interleave deterministically"
+distractor.impl = "use set to avoid duplicates; reject correct; sanity-check magnitude"
+
+[learning.features]
+review_mode = true
+error_tags = ["off-by-one","decimal-place","fraction-reduction","wrong-ratio","interleave-swap","fib-near"]
+adaptive_redrill = { enabled = true, size = 10, weight_top_error_tags = 2 }
+confidence_marking = { enabled = true, not_scored = true }
+practice_mode = { enabled = true }
+
+[study.plan]
+daily = "Two short runs (one per mode). Track score, time left, top error tag."
+weekly = "Focus on top error tag; 3 re-drill sessions (~10 min)."
+micro_techniques = [
+  "Decimals: multiply as integers, place decimal by total places; magnitude sanity-check.",
+  "Fractions: a/b ÷ c/d = a/b × d/c; reduce early via GCD.",
+  "Percents: x% of N = (x/100)*N; memorize friendly fractions (12.5%=1/8, 6.25%=1/16).",
+  "Sequences: state pattern before answering; if unnamed, skip and return."
+]
+
+[acceptance.tests]
+items = [
+  "App launches; each mode starts correct timer",
+  "Exact per-question layout (index, prompt, five labels, single dropdown)",
+  "Dropdown default is 'Select Answer'; navigation preserves selection",
+  "Scoring correct across answered/unanswered",
+  "Timer auto-submits at 0:00",
+  "Results show only Total/Correct/Incorrect/Unanswered",
+  "Review shows correct, chosen, explanation, error tag",
+  "CSV export schema correct",
+  "Seeded runs reproducible",
+  "Self-test passes"
+]
